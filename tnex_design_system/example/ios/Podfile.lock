@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - tnex_design_system (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - tnex_design_system (from `.symlinks/plugins/tnex_design_system/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  tnex_design_system:
+    :path: ".symlinks/plugins/tnex_design_system/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  tnex_design_system: d56dc4efb92d16508397211c68753480130dc0cd
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.11.3
