@@ -14,8 +14,6 @@ class TnexColor {
   static const Color primary300 = Color(0xFF003143);
   static const Color primary200 = Color(0xFF00212D);
 
-  static const Color gray900 = Color(0xFF1A2F45);
-
   static const Color grey900 = Color(0xFF1A2F45);
   static const Color grey800 = Color(0xFF344659);
   static const Color grey700 = Color(0xFF4D5D6E);

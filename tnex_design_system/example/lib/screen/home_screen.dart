@@ -6,7 +6,6 @@ import '/main.dart';
 import '/screen/item_list.dart';
 import 'package:tnex_design_system/src/colors.dart';
 import 'package:tnex_design_system/src/fonts.dart';
-import 'package:tnex_design_system/src/components/appbar.dart';
 import 'color_drop_down.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,8 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     itemList = _itemList();
     return Scaffold(
-      appBar: TnexAppBar(
-        title: 'Template',
+      appBar: AppBar(
+        title: Text('Template'),
       ),
       body: Container(
         child: Column(

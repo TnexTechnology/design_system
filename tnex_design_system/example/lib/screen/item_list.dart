@@ -7,8 +7,6 @@ import 'package:tnex_design_system/src/colors.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 import 'package:tnex_design_system/src/colors.dart';
 import 'package:tnex_design_system/src/fonts.dart';
-import 'package:tnex_design_system_example/qr_code/qr_main.dart';
-import 'package:tnex_design_system_example/qr_code/qr_pay.dart';
 
 class ItemList extends StatelessWidget {
   final TypographyModel item;
@@ -25,18 +23,6 @@ class ItemList extends StatelessWidget {
         //     builder: (context) => GridItemDetails(this.item),
         //   ),
         // );
-        // final qrCode = "00020101021138580010A000000727012800069704260114888980172946960208QRIBFTTA53037045802VN630494C1";
-        final qrCodq = "00020101021238580010A000000727012800069704260114888980172946960208QRIBFTTA53037045802VN63047598";
-        final qrCodd = '00020101021153037045802VN630483CC';
-        final qrCode = "00020101021238580010A000000727012800069704260114031010165781180208QRIBFTTA5303704540105802VN63041508";
-        // final qrCode = "00020101021238560010A0000007270126000697041501121133666688880208QRIBFTTA530370454067900005802VN62100806AX100163046DA4";
-        final provider = Prodiver(fieldId: "38", name: QRProvider.VIETQR, guid: QRProviderGUID.VIETQR, service: 'QRIBFTTA');
-        final merchant = Merchant(merchantId: "33");
-        final consumer = Consumer(bankBin: "970426", bankNumber: '88898017294696');
-        final additionalData = AdditionalData(dataRequest: null, billNumber: null, store: null, loyaltyNumber: null, reference: null, customerLabel: null, terminal: null, purpose: "", mobileNumber: '');
-        final qrPay = QRPay(version: '01', initMethod: "12", provider: provider, merchant: merchant, consumer: consumer, category: "", currency: "704", amount: "", tipAndFeeType: "", tipAndFeeAmount: "", tipAndFeePercent: "", nation: "VN", acquier: "", city: "", zipCode: "", additionalData: additionalData, crc: "crc");
-        qrPay.parse(qrCode);
-        // qrPay.buildOK();
       },
       child: Card(
         elevation: 1.0,

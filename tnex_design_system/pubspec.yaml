@@ -17,8 +17,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
-  get: ^4.3.8
-  get_it: ^7.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -36,16 +34,14 @@ flutter:
         pluginClass: TnexDesignSystemPlugin
       ios:
         pluginClass: TnexDesignSystemPlugin
-#      web:
-#        pluginClass: TnexDesignSystemWeb
-#        fileName: tnex_design_system_web.dart
+      web:
+        pluginClass: TnexDesignSystemWeb
+        fileName: tnex_design_system_web.dart
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-  assets:
-    - assets/images/ic_arrow.png
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages
