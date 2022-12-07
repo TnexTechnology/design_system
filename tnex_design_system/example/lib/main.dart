@@ -2,37 +2,47 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:tnex_design_system/tnex_design_system.dart';
 import 'package:tnex_design_system/src/colors.dart';
 import 'package:tnex_design_system/src/fonts.dart';
 
 import '/constant/constant.dart';
 import '/screen/grid_item_details.dart';
-import '/screen/home_screen.dart';
+import '/screen/home_main.dart';
 import '/screen/splash_screen.dart';
 
-import 'package:crclib/crclib.dart';
-import 'package:crclib/catalog.dart';
 
 
-
-// void main() => runApp(const DropdownButtonApp());
-
-
-void main() => runApp(MaterialApp(
-  title: 'GridView Demo',
-  home: SplashScreen(),
-  debugShowCheckedModeBanner: false,
+void main() => runApp(GetMaterialApp(
+    title: 'GridView Demo',
+    debugShowCheckedModeBanner: false,
   theme: ThemeData(
     primarySwatch: Colors.red,
     accentColor: Color(0xFF761322),
   ),
-  routes: <String, WidgetBuilder>{
-    SPLASH_SCREEN: (BuildContext context) => SplashScreen(),
-    HOME_SCREEN: (BuildContext context) => HomeScreen(),
-    //GRID_ITEM_DETAILS_SCREEN: (BuildContext context) => GridItemDetails(),
-  },
-));
+    routes: <String, WidgetBuilder>{
+      SPLASH_SCREEN: (BuildContext context) => SplashScreen(),
+      HOME_SCREEN: (BuildContext context) => HomeMainScreen(),
+      //GRID_ITEM_DETAILS_SCREEN: (BuildContext context) => GridItemDetails(),
+    },
+    home: SplashScreen(),));
+
+
+// void main() => runApp(MaterialApp(
+//   title: 'GridView Demo',
+//   home: SplashScreen(),
+//   debugShowCheckedModeBanner: false,
+//   theme: ThemeData(
+//     primarySwatch: Colors.red,
+//     accentColor: Color(0xFF761322),
+//   ),
+//   routes: <String, WidgetBuilder>{
+//     SPLASH_SCREEN: (BuildContext context) => SplashScreen(),
+//     HOME_SCREEN: (BuildContext context) => HomeMainScreen(),
+//     //GRID_ITEM_DETAILS_SCREEN: (BuildContext context) => GridItemDetails(),
+//   },
+// ));
 
 
 // void main() {

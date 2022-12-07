@@ -14,16 +14,16 @@ class TnexColor {
   static const Color primary300 = Color(0xFF003143);
   static const Color primary200 = Color(0xFF00212D);
 
-  static const Color grey900 = Color(0xFF1A2F45);
-  static const Color grey800 = Color(0xFF344659);
-  static const Color grey700 = Color(0xFF4D5D6E);
-  static const Color grey600 = Color(0xFF677483);
-  static const Color grey500 = Color(0xFF808B97);
-  static const Color grey400 = Color(0xFF99A3AC);
-  static const Color grey300 = Color(0xFFB3BAC1);
-  static const Color grey200 = Color(0xFFCCD1D6);
-  static const Color grey100 = Color(0xFFE6E8EA);
-  static const Color grey10 = Color(0xFFF7F8F9);
+  static const Color gray900 = Color(0xFF1A2F45);
+  static const Color gray800 = Color(0xFF344659);
+  static const Color gray700 = Color(0xFF4D5D6E);
+  static const Color gray600 = Color(0xFF677483);
+  static const Color gray500 = Color(0xFF808B97);
+  static const Color gray400 = Color(0xFF99A3AC);
+  static const Color gray300 = Color(0xFFB3BAC1);
+  static const Color gray200 = Color(0xFFCCD1D6);
+  static const Color gray100 = Color(0xFFE6E8EA);
+  static const Color gray10 = Color(0xFFF7F8F9);
 
   static const Color white = Color(0xFFFFFFFF);
 
