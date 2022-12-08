@@ -43,7 +43,10 @@ enum TnexTypography {
   body14Reg,
   body12Semi,
   body12Med,
-  body12Reg
+  body12Reg,
+  caption12Semi,
+  caption12Med,
+  caption12Reg
 }
 
 enum ErrorCode {
@@ -83,7 +86,10 @@ extension on TnexTypography {
     TnexTypography.body14Reg: 14.0,
     TnexTypography.body12Semi: 12.0,
     TnexTypography.body12Med: 12.0,
-    TnexTypography.body12Reg: 12.0
+    TnexTypography.body12Reg: 12.0,
+    TnexTypography.caption12Semi: 12.0,
+    TnexTypography.caption12Med: 12.0,
+    TnexTypography.caption12Reg: 12.0
     };
 
   static final _weights = {
@@ -104,7 +110,10 @@ extension on TnexTypography {
     TnexTypography.body14Reg: FontWeight.w400,
     TnexTypography.body12Semi: FontWeight.w600,
     TnexTypography.body12Med: FontWeight.w500,
-    TnexTypography.body12Reg: FontWeight.w400
+    TnexTypography.body12Reg: FontWeight.w400,
+    TnexTypography.caption12Semi: FontWeight.w600,
+    TnexTypography.caption12Med: FontWeight.w500,
+    TnexTypography.caption12Reg: FontWeight.w400
   };
 
   double get fontSize => _sizes[this] ?? 14.0;

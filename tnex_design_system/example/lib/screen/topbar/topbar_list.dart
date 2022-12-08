@@ -75,7 +75,7 @@ class _TopbarListState extends State<TopbarListScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => TopbarRoute(title: item.name,),
+            builder: (context) => TopbarRoute(title: item.name, isShowBack: true),
           ),
         );
         break;
@@ -273,15 +273,15 @@ class TopbarRoute extends StatelessWidget {
               ),
               ),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                color: Colors.red,
-                child: const Text('Text Go back!', style: TextStyle(color: Colors.blue),),
-              ),
-            )
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pop(context);
+            //   },
+            //   child: Container(
+            //     color: Colors.red,
+            //     child: const Text('Text Go back!', style: TextStyle(color: Colors.blue),),
+            //   ),
+            // )
           ],
         ),
       ),

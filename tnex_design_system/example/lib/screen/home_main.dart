@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:tnex_design_system_example/screen/dropdown_screen.dart';
+import 'package:tnex_design_system_example/screen/input_screen.dart';
+import 'package:tnex_design_system_example/screen/tabbar_screen.dart';
 import 'package:tnex_design_system_example/screen/topbar/topbar_list.dart';
 import '/model/home_item_model.dart';
 import '/model/typography_model.dart';
@@ -67,10 +70,16 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     return [
       HomeItemModel(name: 'Color + Typography', id: 1),
       HomeItemModel(name: 'Top bar', id: 2),
-      HomeItemModel(name: 'Tab bar', id: 3),
+      HomeItemModel(name: 'Check box', id: 3),
       HomeItemModel(name: 'Button', id: 4),
-      HomeItemModel(name: 'Tab', id: 5),
+      HomeItemModel(name: 'Dropdown', id: 5),
       HomeItemModel(name: 'Input', id: 6),
+      HomeItemModel(name: 'Bottom Sheet', id: 7),
+      HomeItemModel(name: 'Toast', id: 8),
+      HomeItemModel(name: 'Tool tip', id: 9),
+      HomeItemModel(name: 'Toggle', id: 10),
+      HomeItemModel(name: 'Search', id: 11),
+      HomeItemModel(name: 'Slider', id: 12),
     ];
   }
 
@@ -89,6 +98,22 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => TopbarListScreen(title: item.name,),
+          ),
+        );
+        break;
+      case 5:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DropdownScreen(),
+          ),
+        );
+        break;
+      case 6:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InputScreen(),
           ),
         );
         break;
