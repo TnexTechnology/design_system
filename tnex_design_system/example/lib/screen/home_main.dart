@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:tnex_design_system_example/screen/topbar/topbar_list.dart';
 import '/model/home_item_model.dart';
 import '/model/typography_model.dart';
 import '/main.dart';
@@ -27,9 +28,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     return Scaffold(
       appBar: TnexAppBar(
         title: 'Template',
-        onClickBack: () {
-          print("333333");
-        },
+        isShowBack: false,
       ),
       body: Container(
         child: Column(
@@ -80,14 +79,16 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
       case 1:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SecondRoute()),
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
         );
         break;
       case 2:
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(),
+            builder: (context) => TopbarListScreen(title: item.name,),
           ),
         );
         break;
