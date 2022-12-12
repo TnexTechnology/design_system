@@ -15,11 +15,8 @@ class TnexTextFormField extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final VoidCallback? onEditingComplete;
   final bool disableSystemKeyBoard;
-  final String? errorText;
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
-  TnexTextFormField({
-    Key? key,
+  const TnexTextFormField({Key? key,
     this.placeHolder = "",
     this.label,
     this.backgroundColor,
@@ -29,8 +26,7 @@ class TnexTextFormField extends StatefulWidget {
     this.validator,
     this.onEditingComplete,
     this.disableSystemKeyBoard = false,
-    this.errorText
-  });
+  }) : super(key: key);
   @override
   State createState() => _TnexTextState();
 
@@ -38,6 +34,14 @@ class TnexTextFormField extends StatefulWidget {
 class _TnexTextState extends State<TnexTextFormField>{
   TextInputType textInputType = TextInputType.text;
   FocusNode focusNode = FocusNode();
+  String? errorText;
+  @override
+  void initState() {
+    focusNode.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -49,50 +53,75 @@ class _TnexTextState extends State<TnexTextFormField>{
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: 8, bottom: 8),
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        decoration: BoxDecoration(
-            color: TnexColor.gray900,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: TnexColor.primary,
-            )),
-        child: GestureDetector(
-            onTap: widget.onTap,
-            child: Container(
-                child: Column(children: <Widget>[
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      child: widget.label != null
-                          ? Text(widget.label!, style: textStyle(TnexTypography.caption12Med, color: TnexColor.gray500))
-                          : Container()),
-                  TextFormField(
-                      onTap: widget.onTap,
-                      onEditingComplete: widget.onEditingComplete,
-                      autovalidateMode: widget.autovalidateMode,
-                      validator: widget.validator,
-                      onChanged: (text) {
-                        if (widget.onChanged != null) {
-                          widget.onChanged!(text);
-                        }
-                      },
-                      controller:  widget.controller,
-                      keyboardType: textInputType,
-                      style: textStyle(TnexTypography.body14Med),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      focusNode: focusNode,
-                      cursorColor: TnexColor.primary,
-                      readOnly: widget.disableSystemKeyBoard,
-                      showCursor: widget.disableSystemKeyBoard ? true : null,
-                      enableInteractiveSelection: !widget.disableSystemKeyBoard,
-                      decoration: new InputDecoration(
-                        errorText: widget.errorText,
-                        isDense: true,
-                        contentPadding: EdgeInsets.only(top: 2),
-                        border: InputBorder.none,
-                        hintText: widget.placeHolder,
-                        hintStyle: textStyle(TnexTypography.body14Med, color: TnexColor.gray700),
-                      )),
-                ]))));
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GestureDetector(
+                onTap: () => focusNode.requestFocus(),
+                behavior: HitTestBehavior.translucent,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  decoration: BoxDecoration(
+                      color: TnexColor.gray900,
+                      borderRadius: BorderRadius.circular(8),
+                      border: focusNode.hasFocus ? Border.all(
+                        color: (errorText?.isEmpty ?? true) ? TnexColor.primary : TnexColor.red900,
+                      ): null),
+                  child: Column(children: <Widget>[
+                    Container(
+                        alignment: Alignment.centerLeft,
+                        child: widget.label != null
+                            ? Text(widget.label!, style: textStyle(TnexTypography.caption12Med, color: TnexColor.gray500))
+                            : Container()),
+                    TextFormField(
+                        onTap: widget.onTap,
+                        onEditingComplete: widget.onEditingComplete,
+                        autovalidateMode: AutovalidateMode.disabled,
+                        // validator: (te) {
+                        //   // return widget.validator!(te);
+                        //   return checkFieldEmpty(te);
+                        // },
+                        onChanged: (text) {
+                          validateTextFormField(text);
+                          if (widget.onChanged != null) widget.onChanged!(text);
+                        },
+                        controller:  widget.controller,
+                        keyboardType: textInputType,
+                        style: textStyle(TnexTypography.body14Med),
+                        textAlignVertical: TextAlignVertical.bottom,
+                        focusNode: focusNode,
+                        cursorColor: TnexColor.primary,
+                        readOnly: widget.disableSystemKeyBoard,
+                        showCursor: widget.disableSystemKeyBoard ? true : null,
+                        enableInteractiveSelection: !widget.disableSystemKeyBoard,
+                        decoration: new InputDecoration(
+                          // errorText: errorText,
+                          isDense: true,
+                          contentPadding: EdgeInsets.only(top: 2),
+                          border: InputBorder.none,
+                          hintText: widget.placeHolder,
+                          hintStyle: textStyle(TnexTypography.body14Med, color: TnexColor.gray700),
+                        )),
+                  ]),
+                )),
+            (errorText?.isEmpty ?? true) ? SizedBox()
+            : Container(
+              height: 18,
+              padding: EdgeInsets.only(top: 4),
+              child: Text(
+                errorText!,
+                textAlign: TextAlign.start,
+                style: textStyle(TnexTypography.caption12Reg, color: TnexColor.red900),
+              ),
+            )
+          ],
+        ));
+  }
+
+  void validateTextFormField(String? fieldContent) {
+    setState(() {
+      errorText = widget.validator!(fieldContent);
+    });
   }
 
   // TextField _buildTextField() {

@@ -35,28 +35,20 @@ class _InputState extends State<InputScreen> {
         margin: EdgeInsets.only(top: 16, bottom: 16, left: 12, right: 12),
         child: Column(
             children:[
-              SizedBox(height: 50,),
-              Container(
-                  height: 48,
-                  decoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: DropdownButtonExample((_color) {
-                    setState(() {
-                      color = _color;
-                    });
-                  })
-              ),
-              SizedBox(height: 10,),
-              TnexTextFormField(label: "Label", placeHolder: "Enter something here",),
-              SizedBox(height: 10,),
-              InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội"),
-              SizedBox(height: 10,),
-              InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội", state: DropdownState.disable),
+              SizedBox(height: 30,),
+              TnexTextFormField(label: "Label", placeHolder: "Enter something here",validator: (text) {
+                if ((text?.length ?? 0) > 3) {
+                  return null;
+                }
+                return "Nhập trên 3 ký tự";
+              },),
               SizedBox(height: 10,),
               InputDropdownItemWithTitle(
                   label: "City",
-                  placeHolder: "Hà Nội",
+                  placeHolder: "Hà Nội11",
+                  onTap: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
                   state: DropdownState.normal,
                   thumb: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
@@ -64,20 +56,23 @@ class _InputState extends State<InputScreen> {
                         height: 16, width: 16),
                   )),
               SizedBox(height: 10,),
+              InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội"),
+              SizedBox(height: 10,),
+              InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội", state: DropdownState.disable),
+
+              SizedBox(height: 10,),
               Container(
                 width: double.infinity,
-                child: Expanded(
-                  child: Row(children: [
-                    Expanded(flex: 15, child: InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội")),
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                        width: double.maxFinite,
-                      ),
+                child: Row(children: [
+                  Expanded(flex: 15, child: InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội")),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      width: double.maxFinite,
                     ),
-                    Expanded(flex: 15, child: InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội")),
-                  ],),
-                ),
+                  ),
+                  Expanded(flex: 15, child: InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội")),
+                ],),
               )
             ]
 
