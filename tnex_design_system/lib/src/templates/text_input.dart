@@ -15,6 +15,10 @@ class TnexTextFormField extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final VoidCallback? onEditingComplete;
   final bool disableSystemKeyBoard;
+  final FormFieldValidator<String>? succeeder;
+  final Widget? icon;
+  final Widget? errorIcon;
+  final Widget? validatedIcon;
 
   const TnexTextFormField({Key? key,
     this.placeHolder = "",
@@ -26,6 +30,10 @@ class TnexTextFormField extends StatefulWidget {
     this.validator,
     this.onEditingComplete,
     this.disableSystemKeyBoard = false,
+    this.icon,
+    this.errorIcon,
+    this.validatedIcon,
+    this.succeeder
   }) : super(key: key);
   @override
   State createState() => _TnexTextState();
@@ -35,6 +43,7 @@ class _TnexTextState extends State<TnexTextFormField>{
   TextInputType textInputType = TextInputType.text;
   FocusNode focusNode = FocusNode();
   String? errorText;
+  String? succedText;
   @override
   void initState() {
     focusNode.addListener(() {
@@ -52,7 +61,7 @@ class _TnexTextState extends State<TnexTextFormField>{
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 8, bottom: 8),
+        margin: const EdgeInsets.only(top: 8, bottom: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -60,126 +69,132 @@ class _TnexTextState extends State<TnexTextFormField>{
                 onTap: () => focusNode.requestFocus(),
                 behavior: HitTestBehavior.translucent,
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   decoration: BoxDecoration(
                       color: TnexColor.gray900,
                       borderRadius: BorderRadius.circular(8),
-                      border: focusNode.hasFocus ? Border.all(
-                        color: (errorText?.isEmpty ?? true) ? TnexColor.primary : TnexColor.red900,
-                      ): null),
-                  child: Column(children: <Widget>[
-                    Container(
-                        alignment: Alignment.centerLeft,
-                        child: widget.label != null
-                            ? Text(widget.label!, style: textStyle(TnexTypography.caption12Med, color: TnexColor.gray500))
-                            : Container()),
-                    TextFormField(
-                        onTap: widget.onTap,
-                        onEditingComplete: widget.onEditingComplete,
-                        autovalidateMode: AutovalidateMode.disabled,
-                        // validator: (te) {
-                        //   // return widget.validator!(te);
-                        //   return checkFieldEmpty(te);
-                        // },
-                        onChanged: (text) {
-                          validateTextFormField(text);
-                          if (widget.onChanged != null) widget.onChanged!(text);
-                        },
-                        controller:  widget.controller,
-                        keyboardType: textInputType,
-                        style: textStyle(TnexTypography.body14Med),
-                        textAlignVertical: TextAlignVertical.bottom,
-                        focusNode: focusNode,
-                        cursorColor: TnexColor.primary,
-                        readOnly: widget.disableSystemKeyBoard,
-                        showCursor: widget.disableSystemKeyBoard ? true : null,
-                        enableInteractiveSelection: !widget.disableSystemKeyBoard,
-                        decoration: new InputDecoration(
-                          // errorText: errorText,
-                          isDense: true,
-                          contentPadding: EdgeInsets.only(top: 2),
-                          border: InputBorder.none,
-                          hintText: widget.placeHolder,
-                          hintStyle: textStyle(TnexTypography.body14Med, color: TnexColor.gray700),
-                        )),
-                  ]),
+                      border: _getBorderBox()),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Column(children: <Widget>[
+                            Container(
+                                alignment: Alignment.centerLeft,
+                                child: widget.label != null
+                                    ? Text(widget.label!, style: textStyle(TnexTypography.caption12Med, color: TnexColor.gray500))
+                                    : Container()),
+                            TextFormField(
+                                onTap: widget.onTap,
+                                onEditingComplete: widget.onEditingComplete,
+                                autovalidateMode: AutovalidateMode.disabled,
+                                // validator: (te) {
+                                //   // return widget.validator!(te);
+                                //   return checkFieldEmpty(te);
+                                // },
+                                onChanged: (text) {
+                                  validateTextFormField(text);
+                                  if (widget.onChanged != null) widget.onChanged!(text);
+                                },
+                                controller:  widget.controller,
+                                keyboardType: textInputType,
+                                style: textStyle(TnexTypography.body14Med),
+                                textAlignVertical: TextAlignVertical.bottom,
+                                focusNode: focusNode,
+                                cursorColor: TnexColor.primary,
+                                readOnly: widget.disableSystemKeyBoard,
+                                showCursor: widget.disableSystemKeyBoard ? true : null,
+                                enableInteractiveSelection: !widget.disableSystemKeyBoard,
+                                decoration: InputDecoration(
+                                  // errorText: errorText,
+                                  isDense: true,
+                                  contentPadding: const EdgeInsets.only(top: 2),
+                                  border: InputBorder.none,
+                                  hintText: widget.placeHolder,
+                                  hintStyle: textStyle(TnexTypography.body14Med, color: TnexColor.gray700),
+                                )),
+                          ])
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      _icon() == null ? SizedBox()
+                          : _icon()!
+                    ],
+                  ),
                 )),
-            (errorText?.isEmpty ?? true) ? SizedBox()
-            : Container(
-              height: 18,
-              padding: EdgeInsets.only(top: 4),
-              child: Text(
-                errorText!,
-                textAlign: TextAlign.start,
-                style: textStyle(TnexTypography.caption12Reg, color: TnexColor.red900),
-              ),
-            )
+            _getMessageWidget()
           ],
         ));
   }
 
+  BoxBorder? _getBorderBox() {
+    if (errorText?.isNotEmpty ?? false) {
+      return Border.all(
+        color: TnexColor.red900,
+      );
+    }
+    if (focusNode.hasFocus == false) {
+      return null;
+    }
+    if (succedText?.isNotEmpty ?? false) {
+      return Border.all(
+        color: TnexColor.green900,
+      );
+    }
+    if (focusNode.hasFocus) {
+      return Border.all(
+        color: TnexColor.primary,
+      );
+    }
+    return null;
+  }
+
+  Widget _getMessageWidget() {
+    if (errorText?.isNotEmpty ?? false) {
+      return Container(
+        height: 18,
+        padding: const EdgeInsets.only(top: 4),
+        child: Text(
+          errorText!,
+          textAlign: TextAlign.start,
+          style: textStyle(TnexTypography.caption12Reg, color: TnexColor.red900),
+        ),
+      );
+    }
+    if (focusNode.hasFocus == false) {
+      return const SizedBox();
+    }
+    if (succedText?.isNotEmpty ?? false) {
+      return Container(
+        height: 18,
+        padding: const EdgeInsets.only(top: 4),
+        child: Text(
+          succedText!,
+          textAlign: TextAlign.start,
+          style: textStyle(TnexTypography.caption12Reg, color: TnexColor.green900),
+        ),
+      );
+    }
+    return const SizedBox();
+  }
+
+  Widget? _icon() {
+    if (errorText?.isNotEmpty ?? false) {
+      return widget.errorIcon;
+    }
+    if (focusNode.hasFocus == false) {
+      return widget.icon;
+    }
+    if (succedText?.isNotEmpty ?? false) {
+      return widget.validatedIcon;
+    }
+    return widget.icon;
+  }
+
   void validateTextFormField(String? fieldContent) {
     setState(() {
+      succedText = widget.succeeder!(fieldContent);
       errorText = widget.validator!(fieldContent);
     });
   }
-
-  // TextField _buildTextField() {
-  //   final _searchController = widget.searchController;
-  //   final isTextEmpty = Util.isEmpty(_searchController.text);
-  //   final primaryText14 = TextStyle(
-  //       fontSize: 14,
-  //       color: TnexColor.title,
-  //       fontWeight: FontWeight.w400,
-  //       decoration: TextDecoration.none);
-  //   final contentPadding = isTextEmpty ? EdgeInsets.symmetric(vertical: 15.w) : EdgeInsets.only(top: 15.w, bottom: 9.w);
-  //   final autofocus = isTextEmpty;
-  //   return TextField(
-  //     controller: _searchController,
-  //     style: primaryText14,
-  //     autofocus: autofocus,
-  //     decoration: InputDecoration(
-  //       isDense: true,
-  //       labelText: isTextEmpty ? null : widget.labelText,
-  //       labelStyle: isTextEmpty ? null : TextStyle(
-  //           fontSize: 12,
-  //           color: TnexColor.titlePlaceholder,
-  //           fontWeight: FontWeight.w400,
-  //           decoration: TextDecoration.none),
-  //       contentPadding: contentPadding,
-  //       border: InputBorder.none,
-  //       hintText: widget.hintText,
-  //       hintStyle: textStyle(TnexTypography.hintInput),
-  //       prefixIcon: Container(
-  //         padding: EdgeInsets.all(15),
-  //         child: Image.asset("assets/msb/icons/search_icon.png", width: 54.w, height: 54.w),
-  //       ),
-  //       suffixIcon: isTextEmpty ? null : IconButton(
-  //           icon: Image.asset("assets/msb/icons/close_icon.png", width: 36.w, height: 36.w),
-  //           onPressed: () => setState(() => _searchController.text = '')
-  //       ),
-  //
-  //     ),
-  //     onChanged: widget.onChanged ?? (text) {
-  //       if (Util.isEmpty(text)) {
-  //         print("hide clear text");
-  //         setState(() => {
-  //           isSearching = false
-  //         });
-  //       } else {
-  //         if (isSearching == false) {
-  //           print("show clear text");
-  //           setState(() => {
-  //             isSearching = true
-  //           });
-  //         }
-  //       }
-  //     },
-  //     // onChanged: widget.onChanged,
-  //     onSubmitted: widget.onSubmitted,
-  //     textAlignVertical: TextAlignVertical.center,
-  //     textInputAction: TextInputAction.search,
-  //   );
-  //
-  // }
 }

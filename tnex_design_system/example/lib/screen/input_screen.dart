@@ -8,6 +8,8 @@ import 'package:tnex_design_system/src/fonts.dart';
 import 'package:tnex_design_system/src/templates/app_bar.dart';
 import 'package:tnex_design_system/src/templates/input_dropdown_item.dart';
 import 'package:tnex_design_system/src/templates/text_input.dart';
+import 'package:tnex_design_system/src/templates/button.dart';
+import 'package:tnex_design_system/src/templates/search_widget.dart';
 import 'color_drop_down.dart';
 import 'package:get/get.dart';
 
@@ -31,51 +33,77 @@ class _InputState extends State<InputScreen> {
         title: 'Dropdown Template',
         onClickBack: Get.back,
       ),
-      body: Container(
-        margin: EdgeInsets.only(top: 16, bottom: 16, left: 12, right: 12),
-        child: Column(
-            children:[
-              SizedBox(height: 30,),
-              TnexTextFormField(label: "Label", placeHolder: "Enter something here",validator: (text) {
-                if ((text?.length ?? 0) > 3) {
-                  return null;
-                }
-                return "Nhập trên 3 ký tự";
-              },),
-              SizedBox(height: 10,),
-              InputDropdownItemWithTitle(
-                  label: "City",
-                  placeHolder: "Hà Nội11",
-                  onTap: () {
-                    FocusManager.instance.primaryFocus?.unfocus();
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(top: 16, bottom: 16, left: 12, right: 12),
+          child: Column(
+              children:[
+                SizedBox(height: 30,),
+                TnexTextFormField(
+                  label: "Label",
+                  placeHolder: "Enter something here",
+                  validator: (text) {
+                    if ((text?.length ?? 0) > 3) {
+                      return null;
+                    }
+                    return "This is an error message";
                   },
-                  state: DropdownState.normal,
-                  thumb: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset("assets/images/ic_preview_1.png",
-                        height: 16, width: 16),
-                  )),
-              SizedBox(height: 10,),
-              InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội"),
-              SizedBox(height: 10,),
-              InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội", state: DropdownState.disable),
+                  succeeder: (text) {
+                    if ((text?.length ?? 0) > 3) {
+                      return "This is a success message.";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 10,),
+                TnexTextFormField(label: "Label", placeHolder: "Enter something here",
+                  validator: (text) {
+                    if ((text?.length ?? 0) > 3) {
+                      return null;
+                    }
+                    return "This is an error message";
+                  }, succeeder: (text) {
+                    if ((text?.length ?? 0) > 3) {
+                      return "This is a success message.";
+                    }
+                    return null;
+                  },
+                  icon: Image.asset("assets/images/system/ic_card.png",
+                    height: 24, width: 24, color: TnexColor.gray700,),
+                  errorIcon: Image.asset("assets/images/system/ic_info.png",
+                    height: 24, width: 24, color: TnexColor.red900,),
+                  validatedIcon: Image.asset("assets/images/system/ic_check_done_circle.png",
+                    height: 24, width: 24, color: TnexColor.green900,),),
+                SizedBox(height: 10,),
+                TnexButton(title: "Dismiss keyboard", onPressed: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },),
+                SizedBox(height: 10,),
+                InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội", state: DropdownState.disable),
 
-              SizedBox(height: 10,),
-              Container(
-                width: double.infinity,
-                child: Row(children: [
-                  Expanded(flex: 15, child: InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội")),
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      width: double.maxFinite,
-                    ),
-                  ),
-                  Expanded(flex: 15, child: InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội")),
-                ],),
-              )
-            ]
+                SizedBox(height: 10,),
+                SearchFormField(
+                  leftIcon: Image.asset("assets/images/system/ic_search.png",
+                    height: 24, width: 24, color: TnexColor.white,),
+                  rightIcon: Image.asset("assets/images/system/ic_close.png",
+                    height: 24, width: 24, color: TnexColor.white,),
+                  placeHolder: "Search...",
+                  controller: TextEditingController(),
+                ),
+                SizedBox(height: 10,),
+                SearchFormField(
+                  leftIcon: Image.asset("assets/images/system/ic_search.png",
+                    height: 24, width: 24, color: TnexColor.white,),
+                  rightIcon: Image.asset("assets/images/system/ic_close.png",
+                    height: 24, width: 24, color: TnexColor.white,),
+                  placeHolder: "Keyword...",
+                  controller: TextEditingController(),
+                  borderColor: TnexColor.gray700,
+                  backgroundColor: Colors.transparent,
+                ),
+              ]
 
+          ),
         ),
       ),
     );
