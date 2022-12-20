@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:tnex_design_system_example/screen/dropdown_screen.dart';
 import 'package:tnex_design_system_example/screen/input_screen.dart';
+import 'package:tnex_design_system_example/screen/switch_screen.dart';
 import 'package:tnex_design_system_example/screen/tabbar_screen.dart';
 import 'package:tnex_design_system_example/screen/toast_screen.dart';
 import 'package:tnex_design_system_example/screen/topbar/topbar_list.dart';
@@ -11,6 +13,7 @@ import '/main.dart';
 import '/screen/item_list.dart';
 import 'package:tnex_design_system/src/colors.dart';
 import 'package:tnex_design_system/src/fonts.dart';
+import 'bottom_sheet_screen.dart';
 import 'color_drop_down.dart';
 import '/screen/home_screen.dart';
 import 'package:tnex_design_system/src/templates/app_bar.dart';
@@ -71,16 +74,13 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     return [
       HomeItemModel(name: 'Color + Typography', id: 1),
       HomeItemModel(name: 'Top bar', id: 2),
-      HomeItemModel(name: 'Check box', id: 3),
       HomeItemModel(name: 'Button', id: 4),
       HomeItemModel(name: 'Dropdown', id: 5),
-      HomeItemModel(name: 'Input', id: 6),
+      HomeItemModel(name: 'Input text + Search', id: 6),
       HomeItemModel(name: 'Bottom Sheet', id: 7),
       HomeItemModel(name: 'Toast', id: 8),
       HomeItemModel(name: 'Tool tip', id: 9),
-      HomeItemModel(name: 'Toggle', id: 10),
-      HomeItemModel(name: 'Search', id: 11),
-      HomeItemModel(name: 'Slider', id: 12),
+      HomeItemModel(name: 'Toggle + Slider', id: 10),
     ];
   }
 
@@ -102,6 +102,14 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
           ),
         );
         break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ToastDemoRoute(),
+          ),
+        );
+        break;
       case 5:
         Navigator.push(
           context,
@@ -118,11 +126,27 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
           ),
         );
         break;
+      case 7:
+        Navigator.push(
+          context,
+          MaterialWithModalsPageRoute(
+            builder: (context) => BottomSheetDemoRoute(),
+          ),
+        );
+        break;
       case 8:
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ToastDemoRoute(),
+          ),
+        );
+        break;
+      case 10:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SwitchDemoRoute(),
           ),
         );
         break;

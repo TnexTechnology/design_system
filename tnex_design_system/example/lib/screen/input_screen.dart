@@ -30,7 +30,7 @@ class _InputState extends State<InputScreen> {
     return Scaffold(
       backgroundColor: TnexColor.background,
       appBar: TnexAppBar(
-        title: 'Dropdown Template',
+        title: 'Input text + Search',
         onClickBack: Get.back,
       ),
       body: SingleChildScrollView(
@@ -78,8 +78,8 @@ class _InputState extends State<InputScreen> {
                 TnexButton(title: "Dismiss keyboard", onPressed: () {
                   FocusManager.instance.primaryFocus?.unfocus();
                 },),
-                SizedBox(height: 10,),
-                InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội", state: DropdownState.disable),
+                // SizedBox(height: 10,),
+                // InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội", state: DropdownState.disable),
 
                 SizedBox(height: 10,),
                 SearchFormField(

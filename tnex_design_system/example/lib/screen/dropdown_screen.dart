@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:tnex_design_system_example/model/home_item_model.dart';
 import '/model/color_model.dart';
 import '/model/typography_model.dart';
 import '/main.dart';
 import '/screen/item_list.dart';
 import 'package:tnex_design_system/src/colors.dart';
 import 'package:tnex_design_system/src/fonts.dart';
+import 'package:tnex_design_system/src/templates/button.dart';
 import 'package:tnex_design_system/src/templates/app_bar.dart';
 import 'package:tnex_design_system/src/templates/input_dropdown_item.dart';
+import 'package:tnex_design_system/src/templates/tnex_bottom_sheet.dart';
+import 'bottom_sheet_screen.dart';
 import 'color_drop_down.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +25,9 @@ class DropdownScreen extends StatefulWidget {
 class _DropdownState extends State<DropdownScreen> {
   List<TypographyModel>? itemList;
   Color color = TnexColor.primary;
+  String currentCity = "Hà Nội";
+  bool isDisable = false;
+  bool isShowIcon = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,54 +43,56 @@ class _DropdownState extends State<DropdownScreen> {
         child: Column(
             children:[
               SizedBox(height: 50,),
-              Container(
-                  height: 48,
-                  decoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: DropdownButtonExample((_color) {
-                    setState(() {
-                      color = _color;
-                    });
-                  })
-              ),
               SizedBox(height: 10,),
-              InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội", state: DropdownState.select,),
+              InputDropdownItemWithTitle(label: "City", placeHolder: currentCity, state: isDisable ? DropdownState.disable : DropdownState.normal, thumb: isShowIcon ? ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset("assets/images/ic_preview_1.png",
+                    height: 16, width: 16),
+              ) : null, onTap: () {
+                _showBottomSheet(context);
+              },),
               SizedBox(height: 10,),
-              InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội"),
+              TnexButton(title: isDisable ? "Enable" : "Disable", onPressed: () {
+                setState(() {
+                  isDisable = !isDisable;
+                });
+              },),
               SizedBox(height: 10,),
-              InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội", state: DropdownState.disable),
-              SizedBox(height: 10,),
-              InputDropdownItemWithTitle(
-                  label: "City",
-                  placeHolder: "Hà Nội",
-                  state: DropdownState.normal,
-                  thumb: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset("assets/images/ic_preview_1.png",
-                        height: 16, width: 16),
-                  )),
-              SizedBox(height: 10,),
-              Container(
-                width: double.infinity,
-                child: Expanded(
-                  child: Row(children: [
-                    Expanded(flex: 15, child: InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội")),
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                        width: double.maxFinite,
-                      ),
-                    ),
-                    Expanded(flex: 15, child: InputDropdownItemWithTitle(label: "City", placeHolder: "Hà Nội")),
-                  ],),
-                ),
-              )
+              TnexButton(title: isShowIcon ? "Hide icon item" : "Show icon item", onPressed: () {
+                setState(() {
+                  isShowIcon = !isShowIcon;
+                });
+              },),
             ]
 
         ),
       ),
     );
+  }
+
+  _showBottomSheet(BuildContext context) async {
+    final HomeItemModel? item = await showMaterialModalBottomSheet(
+      expand: false,
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) =>
+          GestureDetector(
+              onTap: () => Navigator.of(context).pop(),
+              child: Container(
+                color: const Color.fromRGBO(0, 0, 0, 0.001),
+                child: TnexBottomSheet(title: "Title", contentWidget: TermsAndConditionsWidget(onTap: (item) {
+                  Navigator.pop(context, item);
+                },),),
+              )
+          ),
+    );
+    setState(() {
+      if (item != null) {
+        currentCity = item.name;
+      }
+    });
+
+
   }
 
   List<TypographyModel> _itemList() {

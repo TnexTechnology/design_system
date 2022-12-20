@@ -72,12 +72,14 @@ class ToastUtils {
 
   static void showMessageToast(BuildContext context, String message, {required ToastType type, Duration second = const Duration(seconds: 3)}) {
     OverlayEntry? _overlayEntry;
+    bool isRemoved = false;
     _overlayEntry = createToastOverlay(context, message, second, type: type, closeCallback: () {
+      isRemoved = true;
       _overlayEntry?.remove();
     });
     Overlay.of(context)?.insert(_overlayEntry);
     Future.delayed(second, () {
-      if (_overlayEntry != null) {
+      if (_overlayEntry != null && isRemoved == false) {
         _overlayEntry.remove();
       }
     });
