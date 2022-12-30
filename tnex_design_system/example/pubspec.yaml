@@ -25,6 +25,7 @@ dependencies:
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
     path: ../
+  showcaseview:
   simple_animations: ^4.0.1
   modal_bottom_sheet:
 

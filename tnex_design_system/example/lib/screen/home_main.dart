@@ -6,6 +6,7 @@ import 'package:tnex_design_system_example/screen/input_screen.dart';
 import 'package:tnex_design_system_example/screen/switch_screen.dart';
 import 'package:tnex_design_system_example/screen/tabbar_screen.dart';
 import 'package:tnex_design_system_example/screen/toast_screen.dart';
+import 'package:tnex_design_system_example/screen/tooltip/tooltip_screen.dart';
 import 'package:tnex_design_system_example/screen/topbar/topbar_list.dart';
 import '/model/home_item_model.dart';
 import '/model/typography_model.dart';
@@ -139,6 +140,14 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => ToastDemoRoute(),
+          ),
+        );
+        break;
+      case 9:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const TooltipScreen(),
           ),
         );
         break;
